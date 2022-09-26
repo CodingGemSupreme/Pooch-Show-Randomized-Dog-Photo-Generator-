@@ -1,25 +1,26 @@
-import logo from './logo.svg';
+import React from "react";
 import './App.css';
+import Mash from './components/Mash';
+import ShowPooch from './components/ShowPooch';
+import Navigation from './components/Navigation';
+
+const URL = "https://dog.ceo/api/breeds/image/random";
 
 function App() {
+  const [poochImg, setPoochImg] = React.useState(null);
+  const gotPooch = async () => {
+    const response = await fetch(URL);
+    const data = await response.json();
+    setPoochImg(data)
+    
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navigation />
+      <Mash poochSearch={gotPooch}/>
+      <ShowPooch gotPooch={poochImg}/>
     </div>
   );
-}
+};
 
 export default App;
